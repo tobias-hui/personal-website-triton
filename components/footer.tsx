@@ -30,7 +30,7 @@ export default function Footer() {
       <div className="container flex justify-center items-center">
         <div className="flex space-x-8">
           <a
-            href="https://github.com"
+            href="https://github.com/tobias-hui"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-white transition-colors"
@@ -39,7 +39,7 @@ export default function Footer() {
             <span className="sr-only">GitHub</span>
           </a>
           <a
-            href="https://twitter.com"
+            href="https://x.com/huikai18"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-white transition-colors"
@@ -48,7 +48,7 @@ export default function Footer() {
             <span className="sr-only">Twitter</span>
           </a>
           <a
-            href="https://xiaohongshu.com"
+            href="https://www.xiaohongshu.com/user/profile/619754e00000000010004309?xsec_token=YB2Vt-_DytsN9aVe6DZJ7DbjF4mvD65uAiIr-1FPygfF0%3D&xsec_source=app_share&xhsshare=CopyLink&appuid=619754e00000000010004309&apptime=1745077997&share_id=f3d813b484ed486b91c3e0fc8329cade&share_channel=copy_link"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-white transition-colors"
