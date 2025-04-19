@@ -36,34 +36,34 @@ export default function Home() {
         "Developed responsive web applications and e-commerce platforms using modern JavaScript frameworks and CSS preprocessors.",
     },
     {
-      position: "Junior Developer",
-      company: "StartUp Ventures",
-      year: "2016 - 2018",
+      position: "Technical Art",
+      company: "Builtopia",
+      year: "2022 - 2023",
       description:
-        "Worked on full-stack development projects using Node.js and React. Participated in agile development processes.",
+        "Created 3D models and shaders for online virtual spaces; Optimized existing workflows using text-to-image AI technology to enhance production efficiency.",
     },
   ]
 
   const skills = [
-    { name: "UI/UX Design", level: 90 },
-    { name: "Responsive Design", level: 85 },
+    { name: "FastAPI", level: 90 },
+    { name: "Reflex", level: 80 },
     { name: "Git & GitHub", level: 90 },
-    { name: "Docker", level: 75 },
+    { name: "Docker", level: 80 },
     { name: "AWS", level: 70 },
-    { name: "Figma", level: 85 },
-    { name: "VS Code", level: 95 },
-    { name: "CI/CD", level: 80 },
+    { name: "Figma", level: 70 },
+    { name: "UI/UX Design", level: 70 },
+    { name: "Blender", level: 90 },
+    { name: "Houdini", level: 80 },
+    { name: "Game Engine", level: 70 },
   ]
 
   const languages = [
-    { name: "JavaScript/TypeScript", level: 95 },
-    { name: "HTML & CSS", level: 90 },
-    { name: "React & Next.js", level: 85 },
-    { name: "Node.js", level: 80 },
-    { name: "Python", level: 70 },
-    { name: "GraphQL", level: 65 },
-    { name: "SQL", level: 75 },
-    { name: "PHP", level: 60 },
+    { name: "Python", level: 90 },
+    { name: "JavaScript/TypeScript", level: 70 },
+    { name: "HTML & CSS", level: 65 },
+    { name: "React & Next.js", level: 75 },
+    { name: "Node.js", level: 60 },
+    { name: "C++", level: 60 },
   ]
 
   const bioText = `Kai Hui is a Chinese creator and programmer based in Shenzhen. In his second year of university, he began interning at the seed-funded startup Builtopia, gaining firsthand experience in the challenges of entrepreneurship. After participating in award-winning AI hackathons and building a profitable API service with former colleagues, he founded Tritonix in 2024, supported by former CEO Cheng Fu, to provide automated operation solutions for e-commerce brands. He adheres to the principles of Minimalist Entrepreneurship in his business approach.`
