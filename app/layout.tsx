@@ -15,6 +15,11 @@ export const metadata: Metadata = {
   title: "Kai Hui",
   description: "Personal website of Kai Hui",
   keywords: ["portfolio", "developer", "next.js", "react", "tailwind"],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
     generator: 'v0.dev'
 }
 

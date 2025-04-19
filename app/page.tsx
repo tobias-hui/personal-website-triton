@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Home() {
   const { t } = useLanguage()
@@ -23,21 +24,21 @@ export default function Home() {
   const experience = [
     {
       position: "Senior Frontend Developer",
-      company: "Tech Innovations Inc.",
+      company: <Link href="https://piapi.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PiAPI.ai</Link>,
       year: "2020 - Present",
       description:
         "Lead frontend development for enterprise applications using React, Next.js, and TypeScript. Implemented design systems and improved performance metrics by 40%.",
     },
     {
-      position: "Web Developer",
-      company: "Digital Solutions Ltd.",
-      year: "2018 - 2020",
+      position: "Backend Developer",
+      company:  <Link href="https://piapi.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PiAPI.ai</Link>,
+      year: "2023 - 2024",
       description:
-        "Developed responsive web applications and e-commerce platforms using modern JavaScript frameworks and CSS preprocessors.",
+        "Developed and integrated backend APIs; Maintained comprehensive API documentation for developer clients.",
     },
     {
       position: "Technical Art",
-      company: "Builtopia",
+      company: <Link href="https://builtopia.io/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Builtopia</Link>,
       year: "2022 - 2023",
       description:
         "Created 3D models and shaders for online virtual spaces; Optimized existing workflows using text-to-image AI technology to enhance production efficiency.",
