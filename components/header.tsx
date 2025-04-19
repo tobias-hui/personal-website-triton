@@ -5,14 +5,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/components/language-provider"
-import { Menu, X, Globe } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 const navItems = [
-  { href: "/", label: "nav.home" },
+  { href: "/", label: "nav.about" },
   { href: "/projects", label: "nav.projects" },
-  { href: "/blog", label: "nav.blog" },
+  { href: "/blog", label: "nav.article" },
   { href: "/books", label: "nav.books" },
   { href: "/tech-stack", label: "nav.tech" },
   { href: "/reminder", label: "nav.reminder" },
@@ -88,18 +87,6 @@ export default function Header() {
           </nav>
         </div>
         <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Globe className="h-5 w-5" />
-                <span className="sr-only">Toggle language</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setLanguage("en")}>English</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("zh")}>中文</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             <span className="sr-only">Toggle menu</span>

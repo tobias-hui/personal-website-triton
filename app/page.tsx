@@ -66,7 +66,7 @@ export default function Home() {
     { name: "PHP", level: 60 },
   ]
 
-  const bioText = `Kai Hui is a Chinese creator and programmer. He currently lives in San Francisco, California, where he's the Founder & CEO at Horizon Tech. His lifelong appreciation for building software and sharing knowledge led him to speak in over 50 conferences worldwide. His passion for open source put him on the top 100 most active users on GitHub at age 25. Before moving to the US, Kai developed multiple applications, mentored startups, and worked at major companies in Asia, such as Tencent and Alibaba.`
+  const bioText = `Kai Hui is a Chinese creator and programmer based in Shenzhen. In his second year of university, he began interning at the seed-funded startup Builtopia, gaining firsthand experience in the challenges of entrepreneurship. After participating in award-winning AI hackathons and building a profitable API service with former colleagues, he founded Tritonix in 2024, supported by former CEO Cheng Fu, to provide automated operation solutions for e-commerce brands. He adheres to the principles of Minimalist Entrepreneurship in his business approach.`
 
   const copyBio = () => {
     navigator.clipboard.writeText(bioText)
@@ -89,28 +89,29 @@ export default function Home() {
 
   return (
     <PageTransition>
-      {/* Hero Section */}
-      <div className="min-h-[30vh] flex flex-col items-center justify-center bg-black">
-        <div className="container px-4 py-8 md:py-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
-                Create, Fail, Repeat until Success
-              </h1>
-              <p className="mt-4 text-xl text-zinc-400">Minimalist Entrepreneur, Full-Stack Developer, 3D Artist</p>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-      {/* Profile Section */}
-      <div className="bg-black py-4">
+      {/* Profile Section with Hero Content */}
+      <div className="bg-black py-8 md:py-12">
         <div className="container">
           <div className="max-w-4xl mx-auto">
+            {/* Hero Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center mt-12 mb-12"
+            >
+              <h1 className="text-xl font-bold tracking-tight sm:text-3xl md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                Create, Fail, Repeat until Success
+              </h1>
+              <p className="mt-4 text-xl text-zinc-400 mb-12">
+                Minimalist Entrepreneur, Full-Stack Developer, 3D Artist
+              </p>
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col md:flex-row gap-6 items-start"
             >
               {/* Profile Image */}
@@ -121,22 +122,28 @@ export default function Home() {
               </div>
 
               {/* Profile Info */}
-              <div className="w-full md:w-2/3 space-y-3">
-                <p className="text-lg text-zinc-200">
-                  Hey, I'm Kai Hui, I started as a software engineer back in 2012, working with JavaScript.
+              <div className="w-full md:w-2/3 space-y-4">
+                <p className="text-base text-zinc-400 leading-relaxed">
+                  Hey, I'm Kai Hui, I started as a developer back in 2020, working with 3D Game Developing using blender
+                  and Unreal Engine.
                 </p>
 
-                <p className="text-zinc-300">
-                  I'm the <span className="text-white font-medium">Founder & CEO</span> at Horizon Tech. Before that, I
-                  was a VP of Developer Experience at CloudStack and CTO at Nexus Cloud. I'm originally from China and
-                  now living in <span className="text-white font-medium">San Francisco, California</span> with my
-                  amazing wife and beautiful son.
+                <p className="text-base text-zinc-400 leading-relaxed">
+                  I'm the <span className="text-white font-medium text-lg">Founder & CEO</span> at Tritonix. Before
+                  that, I interned at Builtopia. Although the company ultimately failed, I developed a strong friendship
+                  with our CEO,{" "}
+                  <span className="text-white font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-purple-400">
+                    {" "}
+                    Cheng Fu{" "}
+                  </span>
+                  , who continues to mentor me today. I'm originally from China and now living in{" "}
+                  <span className="text-white font-medium text-lg">Shenzhen, Guangdong.</span>
                 </p>
 
-                <p className="text-zinc-300">
-                  <span className="text-white font-medium">I love dark mode</span>, open source, and side projects. When
-                  I'm not working, I like running, watching movies, and{" "}
-                  <span className="text-white font-medium">eating hotpot</span>.
+                <p className="text-base text-zinc-400 leading-relaxed">
+                  The goal of a startup isn't just money. I want to{" "}
+                  <span className="text-white font-medium text-lg">fulfill my mission</span>, and if I can support my
+                  family's happiness along the way, that's even better.
                 </p>
               </div>
             </motion.div>
@@ -145,8 +152,8 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-6"
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="mt-8"
             >
               <h2 className="text-2xl font-bold mb-2">Bio</h2>
               <p className="text-zinc-400 text-sm mb-3">

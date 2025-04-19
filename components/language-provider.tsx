@@ -12,9 +12,9 @@ interface LanguageContextType {
 
 const translations = {
   en: {
-    "nav.home": "Home",
+    "nav.about": "About",
     "nav.projects": "Projects",
-    "nav.blog": "Blog",
+    "nav.article": "Article",
     "nav.books": "Books",
     "nav.tech": "Tech Stack",
     "nav.reminder": "Reminder",
@@ -28,25 +28,7 @@ const translations = {
     "reminder.subtitle": "Personal Life Motto",
     "footer.rights": "All rights reserved",
     // Add more translations as needed
-  },
-  zh: {
-    "nav.home": "首页",
-    "nav.projects": "项目",
-    "nav.blog": "博客",
-    "nav.books": "书籍",
-    "nav.tech": "技术栈",
-    "nav.reminder": "箴言",
-    "home.title": "创造，失败，重复直至成功",
-    "home.subtitle": "极简主义企业家，全栈开发者，3D艺术家",
-    "projects.title": "我的项目",
-    "blog.title": "博客",
-    "books.title": "推荐书籍",
-    "tech.title": "我的技术栈",
-    "reminder.title": "箴言",
-    "reminder.subtitle": "个人人生信条",
-    "footer.rights": "版权所有",
-    // Add more translations as needed
-  },
+  }
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
