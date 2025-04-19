@@ -387,7 +387,7 @@ export default function Home() {
                   <CardHeader className="flex flex-row items-center gap-4">
                     <div className="relative h-8 w-8">
                       <Image
-                        src="https://lennysbundle.com/images/logos/v0.png"
+                        src="https://canva0.oss-cn-hongkong.aliyuncs.com/uploads/1745077732.png"
                         alt="v0.dev"
                         fill
                         className="object-contain"
