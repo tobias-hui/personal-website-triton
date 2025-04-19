@@ -333,6 +333,128 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* AI Tools Section */}
+      <div className="bg-black py-12">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-8"
+            >
+              <h2 className="text-2xl font-bold mb-4">AI Tools Mastery</h2>
+              <p className="text-zinc-400">
+                As a modern developer, I leverage cutting-edge AI tools to enhance productivity and creativity. These
+                tools have revolutionized the development workflow, enabling faster prototyping and more efficient
+                problem-solving.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <Card>
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="relative h-8 w-8">
+                      <Image
+                        src="https://cursor.sh/favicon.ico"
+                        alt="Cursor"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <CardTitle>Cursor</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      AI-powered code editor designed to help developers write, understand, and improve code faster.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Card>
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="relative h-8 w-8">
+                      <Image
+                        src="https://lennysbundle.com/images/logos/v0.png"
+                        alt="v0.dev"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <CardTitle>Vercel's V0</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      AI-powered code editor designed to help developers write, understand, and improve code faster.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <Card>
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="relative h-8 w-8">
+                      <Image
+                        src="https://lennysbundle.com/images/logos/bolt.jpg"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <CardTitle>Bolt</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      AI-powered code editor designed to help developers write, understand, and improve code faster.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <Card>
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="relative h-8 w-8">
+                      <Image
+                        src="https://www.perplexity.ai/favicon.ico"
+                        alt="Perplexity"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <CardTitle>Perplexity</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      AI-powered code editor designed to help developers write, understand, and improve code faster.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
     </PageTransition>
   )
 }
