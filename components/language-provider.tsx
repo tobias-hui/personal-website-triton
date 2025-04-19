@@ -28,7 +28,7 @@ const translations = {
     "reminder.subtitle": "Personal Life Motto",
     "footer.rights": "All rights reserved",
     // Add more translations as needed
-  }
+  },
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)

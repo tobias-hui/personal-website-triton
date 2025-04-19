@@ -164,7 +164,7 @@ export default function Home() {
                     Cheng Fu
                   </span>
                   , who continues to mentor me today. I'm originally from China and now living in{" "}
-                  <span className="text-white font-medium text-lg">Shenzhen, Guangdong.</span>
+                  <span className="text-white font-medium text-lg">Shenzhen</span>, Guangdong.
                 </p>
 
                 <p className="text-base text-zinc-400 leading-relaxed">

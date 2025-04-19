@@ -14,97 +14,91 @@ export default function TechStackPage() {
     frontend: [
       {
         name: "React",
-        icon: "/placeholder.svg?height=80&width=80&query=react logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         description: "A JavaScript library for building user interfaces",
-        proficiency: 90,
-      },
-      {
-        name: "Next.js",
-        icon: "/placeholder.svg?height=80&width=80&query=nextjs logo",
-        description: "The React framework for production",
-        proficiency: 85,
-      },
-      {
-        name: "TypeScript",
-        icon: "/placeholder.svg?height=80&width=80&query=typescript logo",
-        description: "Typed JavaScript at any scale",
         proficiency: 80,
       },
       {
-        name: "Tailwind CSS",
-        icon: "/placeholder.svg?height=80&width=80&query=tailwind css logo",
-        description: "A utility-first CSS framework",
-        proficiency: 90,
+        name: "Next.js",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        description: "The React framework for production",
+        proficiency: 75,
       },
       {
-        name: "Framer Motion",
-        icon: "/placeholder.svg?height=80&width=80&query=framer motion logo",
-        description: "A production-ready motion library for React",
+        name: "TypeScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        description: "Typed JavaScript at any scale",
+        proficiency: 70,
+      },
+      {
+        name: "Tailwind CSS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        description: "A utility-first CSS framework",
         proficiency: 75,
       },
     ],
     backend: [
       {
+        name: "FastAPI",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+        description: "Modern, fast web framework for building APIs with Python",
+        proficiency: 90,
+      },
+      {
         name: "Node.js",
-        icon: "/placeholder.svg?height=80&width=80&query=nodejs logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
         description: "JavaScript runtime built on Chrome's V8 engine",
         proficiency: 80,
       },
       {
-        name: "Express",
-        icon: "/placeholder.svg?height=80&width=80&query=express js logo",
-        description: "Fast, unopinionated, minimalist web framework for Node.js",
-        proficiency: 75,
-      },
-      {
         name: "MongoDB",
-        icon: "/placeholder.svg?height=80&width=80&query=mongodb logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
         description: "Document-based, distributed database",
         proficiency: 70,
       },
       {
         name: "PostgreSQL",
-        icon: "/placeholder.svg?height=80&width=80&query=postgresql logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
         description: "Powerful, open source object-relational database",
         proficiency: 65,
-      },
-      {
-        name: "GraphQL",
-        icon: "/placeholder.svg?height=80&width=80&query=graphql logo",
-        description: "A query language for your API",
-        proficiency: 60,
       },
     ],
     tools: [
       {
         name: "Git",
-        icon: "/placeholder.svg?height=80&width=80&query=git logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
         description: "Distributed version control system",
-        proficiency: 85,
+        proficiency: 90,
       },
       {
         name: "Docker",
-        icon: "/placeholder.svg?height=80&width=80&query=docker logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
         description: "Platform for developing, shipping, and running applications",
-        proficiency: 70,
+        proficiency: 80,
       },
       {
         name: "VS Code",
-        icon: "/placeholder.svg?height=80&width=80&query=vscode logo",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/768px-Visual_Studio_Code_1.35_icon.svg.png",
         description: "Code editor redefined and optimized for building modern web applications",
         proficiency: 90,
       },
       {
         name: "Figma",
-        icon: "/placeholder.svg?height=80&width=80&query=figma logo",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
         description: "Collaborative interface design tool",
-        proficiency: 75,
+        proficiency: 70,
       },
       {
-        name: "GitHub Actions",
-        icon: "/placeholder.svg?height=80&width=80&query=github actions logo",
-        description: "Automate your workflow from idea to production",
-        proficiency: 65,
+        name: "Blender",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg",
+        description: "3D creation suite for modeling, animation, and rendering",
+        proficiency: 90,
+      },
+      {
+        name: "Houdini",
+        icon: "https://static-00.iconduck.com/assets.00/apps-houdini-icon-2042x2048-zoncd3rp.png",
+        description: "3D animation and VFX software",
+        proficiency: 80,
       },
     ],
   }
@@ -178,19 +172,6 @@ export default function TechStackPage() {
             </TabsContent>
           ))}
         </Tabs>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-16 text-center"
-        >
-          <h2 className="text-2xl font-bold mb-4">Always Learning</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Technology is constantly evolving, and I'm committed to staying up-to-date with the latest trends and best
-            practices. I'm currently exploring WebAssembly, AI integration, and advanced animation techniques.
-          </p>
-        </motion.div>
       </div>
     </PageTransition>
   )
