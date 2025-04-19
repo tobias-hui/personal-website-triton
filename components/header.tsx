@@ -11,7 +11,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 const navItems = [
   { href: "/", label: "nav.home" },
-  { href: "/about", label: "nav.about" },
   { href: "/projects", label: "nav.projects" },
   { href: "/blog", label: "nav.blog" },
   { href: "/books", label: "nav.books" },
