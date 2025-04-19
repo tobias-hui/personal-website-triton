@@ -24,21 +24,48 @@ export default function Home() {
   const experience = [
     {
       position: "Senior Frontend Developer",
-      company: <Link href="https://piapi.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PiAPI.ai</Link>,
+      company: (
+        <Link
+          href="https://piapi.ai/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          PiAPI.ai
+        </Link>
+      ),
       year: "2020 - Present",
       description:
         "Lead frontend development for enterprise applications using React, Next.js, and TypeScript. Implemented design systems and improved performance metrics by 40%.",
     },
     {
       position: "Backend Developer",
-      company:  <Link href="https://piapi.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PiAPI.ai</Link>,
+      company: (
+        <Link
+          href="https://piapi.ai/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          PiAPI.ai
+        </Link>
+      ),
       year: "2023 - 2024",
       description:
         "Developed and integrated backend APIs; Maintained comprehensive API documentation for developer clients.",
     },
     {
       position: "Technical Art",
-      company: <Link href="https://builtopia.io/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Builtopia</Link>,
+      company: (
+        <Link
+          href="https://builtopia.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          Builtopia
+        </Link>
+      ),
       year: "2022 - 2023",
       description:
         "Created 3D models and shaders for online virtual spaces; Optimized existing workflows using text-to-image AI technology to enhance production efficiency.",
@@ -133,9 +160,8 @@ export default function Home() {
                   I'm the <span className="text-white font-medium text-lg">Founder & CEO</span> at Tritonix. Before
                   that, I interned at Builtopia. Although the company ultimately failed, I developed a strong friendship
                   with our CEO,{" "}
-                  <span className="text-white font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-purple-400">
-                    {" "}
-                    Cheng Fu{" "}
+                  <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                    Cheng Fu
                   </span>
                   , who continues to mentor me today. I'm originally from China and now living in{" "}
                   <span className="text-white font-medium text-lg">Shenzhen, Guangdong.</span>
