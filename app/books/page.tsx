@@ -73,7 +73,7 @@ export default function BooksPage() {
         "A modern interpretation of Stoic philosophy, offering practical techniques for finding tranquility and meaning in today's world.",
       image: "/books/stoic-joy-cover.jpg",
       category: "philosophy",
-      rating: 4.0,
+      rating: 4.6,
     },
     {
       id: 8,
