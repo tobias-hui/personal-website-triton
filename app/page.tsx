@@ -3,10 +3,8 @@
 import { useLanguage } from "@/components/language-provider"
 import PageTransition from "@/components/page-transition"
 import { motion } from "framer-motion"
-import { Briefcase, Award, Copy, Check, Code } from "lucide-react"
+import { Copy, Check } from "lucide-react"
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
@@ -24,74 +22,28 @@ export default function Home() {
   const experience = [
     {
       position: "Senior Frontend Developer",
-      company: (
-        <Link
-          href="https://piapi.ai/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline"
-        >
-          PiAPI.ai
-        </Link>
-      ),
+      company: "PiAPI.ai",
+      companyUrl: "https://piapi.ai/",
       year: "2020 - Present",
       description:
         "Lead frontend development for enterprise applications using React, Next.js, and TypeScript. Implemented design systems and improved performance metrics by 40%.",
     },
     {
       position: "Backend Developer",
-      company: (
-        <Link
-          href="https://piapi.ai/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline"
-        >
-          PiAPI.ai
-        </Link>
-      ),
+      company: "PiAPI.ai",
+      companyUrl: "https://piapi.ai/",
       year: "2023 - 2024",
       description:
         "Developed and integrated backend APIs; Maintained comprehensive API documentation for developer clients.",
     },
     {
       position: "Technical Art",
-      company: (
-        <Link
-          href="https://builtopia.io/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline"
-        >
-          Builtopia
-        </Link>
-      ),
+      company: "Builtopia",
+      companyUrl: "https://builtopia.io/",
       year: "2022 - 2023",
       description:
         "Created 3D models and shaders for online virtual spaces; Optimized existing workflows using text-to-image AI technology to enhance production efficiency.",
     },
-  ]
-
-  const skills = [
-    { name: "FastAPI", level: 90 },
-    { name: "Reflex", level: 80 },
-    { name: "Git & GitHub", level: 90 },
-    { name: "Docker", level: 80 },
-    { name: "AWS", level: 70 },
-    { name: "Figma", level: 70 },
-    { name: "UI/UX Design", level: 70 },
-    { name: "Blender", level: 90 },
-    { name: "Houdini", level: 80 },
-    { name: "Game Engine", level: 70 },
-  ]
-
-  const languages = [
-    { name: "Python", level: 90 },
-    { name: "JavaScript/TypeScript", level: 70 },
-    { name: "HTML & CSS", level: 65 },
-    { name: "React & Next.js", level: 75 },
-    { name: "Node.js", level: 60 },
-    { name: "C++", level: 60 },
   ]
 
   const bioText = `Kai Hui is a Chinese creator and programmer based in Shenzhen. In his second year of university, he began interning at the seed-funded startup Builtopia, gaining firsthand experience in the challenges of entrepreneurship. After participating in award-winning AI hackathons and building a profitable API service with former colleagues, he founded Tritonix in 2024, supported by former CEO Cheng Fu, to provide automated operation solutions for e-commerce brands. He adheres to the principles of Minimalist Entrepreneurship in his business approach.`
@@ -202,134 +154,49 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Experience and Skills Section */}
+      {/* Experience Section */}
       <div id="about" className="bg-black py-6">
         <div className="container">
           <div className="max-w-4xl mx-auto">
-            <Tabs defaultValue="experience" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-6">
-                <TabsTrigger value="experience" className="flex items-center gap-2">
-                  <Briefcase className="h-4 w-4" />
-                  <span className="hidden sm:inline">Experience</span>
-                </TabsTrigger>
-                <TabsTrigger value="skills" className="flex items-center gap-2">
-                  <Award className="h-4 w-4" />
-                  <span className="hidden sm:inline">Skills & Tools</span>
-                </TabsTrigger>
-                <TabsTrigger value="languages" className="flex items-center gap-2">
-                  <Code className="h-4 w-4" />
-                  <span className="hidden sm:inline">Languages</span>
-                </TabsTrigger>
-              </TabsList>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6"
+            >
+              <h2 className="text-2xl font-bold">Experience</h2>
+            </motion.div>
 
-              <TabsContent value="experience">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-4"
+            >
+              {experience.map((job, index) => (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-4"
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
                 >
-                  {experience.map((job, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <div className="flex justify-between items-start">
-                            <CardTitle>{job.position}</CardTitle>
-                            <span className="text-sm text-muted-foreground">{job.year}</span>
-                          </div>
-                          <p className="text-sm text-primary">{job.company}</p>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-muted-foreground">{job.description}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold">{job.position}</h3>
+                    <span className="text-sm text-zinc-400">{job.year}</span>
+                  </div>
+                  <Link
+                    href={job.companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline mb-3 inline-block"
+                  >
+                    {job.company}
+                  </Link>
+                  <p className="text-zinc-400">{job.description}</p>
                 </motion.div>
-              </TabsContent>
-
-              <TabsContent value="skills">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-4"
-                >
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle>Skills & Tools</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {skills.map((skill, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: index * 0.1 }}
-                          className="space-y-1"
-                        >
-                          <div className="flex justify-between">
-                            <span>{skill.name}</span>
-                            <span>{skill.level}%</span>
-                          </div>
-                          <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                            <motion.div
-                              className="h-full bg-primary"
-                              initial={{ width: 0 }}
-                              animate={{ width: `${skill.level}%` }}
-                              transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
-                            />
-                          </div>
-                        </motion.div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </TabsContent>
-              <TabsContent value="languages">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-4"
-                >
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle>Programming Languages</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {languages.map((language, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: index * 0.1 }}
-                          className="space-y-1"
-                        >
-                          <div className="flex justify-between">
-                            <span>{language.name}</span>
-                            <span>{language.level}%</span>
-                          </div>
-                          <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                            <motion.div
-                              className="h-full bg-primary"
-                              initial={{ width: 0 }}
-                              animate={{ width: `${language.level}%` }}
-                              transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
-                            />
-                          </div>
-                        </motion.div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </TabsContent>
-            </Tabs>
+              ))}
+            </motion.div>
           </div>
         </div>
       </div>
@@ -357,99 +224,78 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
+                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
               >
-                <Card>
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="relative h-8 w-8">
-                      <Image
-                        src="https://cursor.sh/favicon.ico"
-                        alt="Cursor"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <CardTitle>Cursor</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      AI-powered code editor designed to help developers write, understand, and improve code faster.
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="flex flex-row items-center gap-4 mb-4">
+                  <div className="relative h-8 w-8">
+                    <Image src="https://cursor.sh/favicon.ico" alt="Cursor" fill className="object-contain" />
+                  </div>
+                  <h3 className="text-xl font-bold">Cursor</h3>
+                </div>
+                <p className="text-zinc-400">
+                  AI-powered code editor designed to help developers write, understand, and improve code faster.
+                </p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
               >
-                <Card>
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="relative h-8 w-8">
-                      <Image
-                        src="https://canva0.oss-cn-hongkong.aliyuncs.com/uploads/1745077732.png"
-                        alt="v0.dev"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <CardTitle>Vercel's V0</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      AI-powered code editor designed to help developers write, understand, and improve code faster.
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="flex flex-row items-center gap-4 mb-4">
+                  <div className="relative h-8 w-8">
+                    <Image
+                      src="https://canva0.oss-cn-hongkong.aliyuncs.com/uploads/1745077732.png"
+                      alt="v0.dev"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold">Vercel's V0</h3>
+                </div>
+                <p className="text-zinc-400">
+                  AI-powered code editor designed to help developers write, understand, and improve code faster.
+                </p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
               >
-                <Card>
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="relative h-8 w-8">
-                      <Image
-                        src="https://lennysbundle.com/images/logos/bolt.jpg"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <CardTitle>Bolt</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      AI-powered code editor designed to help developers write, understand, and improve code faster.
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="flex flex-row items-center gap-4 mb-4">
+                  <div className="relative h-8 w-8">
+                    <Image src="https://lennysbundle.com/images/logos/bolt.jpg" fill className="object-contain" />
+                  </div>
+                  <h3 className="text-xl font-bold">Bolt</h3>
+                </div>
+                <p className="text-zinc-400">
+                  AI-powered code editor designed to help developers write, understand, and improve code faster.
+                </p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
+                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
               >
-                <Card>
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="relative h-8 w-8">
-                      <Image
-                        src="https://www.perplexity.ai/favicon.ico"
-                        alt="Perplexity"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <CardTitle>Perplexity</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      AI-powered code editor designed to help developers write, understand, and improve code faster.
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="flex flex-row items-center gap-4 mb-4">
+                  <div className="relative h-8 w-8">
+                    <Image
+                      src="https://www.perplexity.ai/favicon.ico"
+                      alt="Perplexity"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold">Perplexity</h3>
+                </div>
+                <p className="text-zinc-400">
+                  AI-powered code editor designed to help developers write, understand, and improve code faster.
+                </p>
               </motion.div>
             </div>
           </div>
