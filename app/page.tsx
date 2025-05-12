@@ -21,16 +21,27 @@ export default function Home() {
 
   const experience = [
     {
-      position: "Senior Frontend Developer",
-      company: "PiAPI.ai",
-      companyUrl: "https://piapi.ai/",
-      year: "2020 - Present",
+      position: "齐聚马力Hackthon&2024Googel开发者大会",
+      company: "segmentfault",
+      year: "2023.09.07",
+      description: "Awarded Second Prize for a project focused on animal rescue and welfare.",
+    },
+    {
+      position: "Participant, Shanghai 1st AI Hack Engine",
+      company: "即刻",
+      year: "2023.04.27",
+      description: "Selected as one of sixteen team members for the inaugural Hack Engine program. Collaborated on innovative AI projects and became part of the first cohort of Hack Engine alumni."
+    },
+    {
+      position: "Full-Stack Developer",
+      company: "Tritonix",
+      year: "2024 - Present",
       description:
         "Lead frontend development for enterprise applications using React, Next.js, and TypeScript. Implemented design systems and improved performance metrics by 40%.",
     },
     {
       position: "Backend Developer",
-      company: "PiAPI.ai",
+      company: "PiAPI",
       companyUrl: "https://piapi.ai/",
       year: "2023 - 2024",
       description:
@@ -84,7 +95,7 @@ export default function Home() {
                 Create, Fail, Repeat until Success
               </h1>
               <p className="mt-4 text-xl text-zinc-400 mb-12">
-                Minimalist Entrepreneur, Full-Stack Developer, 3D Artist
+                Minimalist Entrepreneur, Full-Stack Developer, Stoic
               </p>
             </motion.div>
 
@@ -110,12 +121,11 @@ export default function Home() {
 
                 <p className="text-base text-zinc-400 leading-relaxed">
                   I'm the <span className="text-white font-medium text-lg">Founder & CEO</span> at Tritonix. Before
-                  that, I interned at Builtopia. Although the company ultimately failed, I developed a strong friendship
-                  with our CEO,{" "}
+                  that, I interned at Builtopia. Although the company went through a challenging period, I developed a strong friendship with our CEO,{" "}
                   <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
                     Cheng Fu
                   </span>
-                  , who continues to mentor me today. I'm originally from China and now living in{" "}
+                  , as we worked together to find solutions and navigate those difficulties. who continues to mentor me today. I'm originally from China and now living in{" "}
                   <span className="text-white font-medium text-lg">Shenzhen</span>, Guangdong.
                 </p>
 
@@ -185,14 +195,18 @@ export default function Home() {
                     <h3 className="text-xl font-bold">{job.position}</h3>
                     <span className="text-sm text-zinc-400">{job.year}</span>
                   </div>
-                  <Link
-                    href={job.companyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline mb-3 inline-block"
-                  >
-                    {job.company}
-                  </Link>
+                  {job.companyUrl ? (
+                    <Link
+                      href={job.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline mb-3 inline-block"
+                    >
+                      {job.company}
+                    </Link>
+                  ) : (
+                    <span className="mb-3 inline-block">{job.company}</span>
+                  )}
                   <p className="text-zinc-400">{job.description}</p>
                 </motion.div>
               ))}
@@ -267,7 +281,7 @@ export default function Home() {
               >
                 <div className="flex flex-row items-center gap-4 mb-4">
                   <div className="relative h-8 w-8">
-                    <Image src="https://lennysbundle.com/images/logos/bolt.jpg" fill className="object-contain" />
+                    <Image src="https://lennysbundle.com/images/logos/bolt.jpg" alt="Bolt" fill className="object-contain" />
                   </div>
                   <h3 className="text-xl font-bold">Bolt</h3>
                 </div>

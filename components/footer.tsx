@@ -53,7 +53,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-white transition-colors"
           >
-            <Book className="h-5 w-5" />
+            <img src="/XiaohongshuLOGO.svg" alt="小红书" className="h-5 w-5" />
             <span className="sr-only">小红书</span>
           </a>
         </div>

@@ -16,7 +16,7 @@ export default function TechStackPage() {
         name: "React",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         description: "A JavaScript library for building user interfaces",
-        proficiency: 80,
+        proficiency: 70,
       },
       {
         name: "Next.js",
@@ -34,7 +34,7 @@ export default function TechStackPage() {
         name: "Tailwind CSS",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         description: "A utility-first CSS framework",
-        proficiency: 75,
+        proficiency: 65,
       },
     ],
     backend: [
@@ -48,13 +48,13 @@ export default function TechStackPage() {
         name: "Node.js",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
         description: "JavaScript runtime built on Chrome's V8 engine",
-        proficiency: 80,
+        proficiency: 70,
       },
       {
         name: "MongoDB",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
         description: "Document-based, distributed database",
-        proficiency: 70,
+        proficiency: 80,
       },
       {
         name: "PostgreSQL",
@@ -98,7 +98,7 @@ export default function TechStackPage() {
         name: "Houdini",
         icon: "https://static-00.iconduck.com/assets.00/apps-houdini-icon-2042x2048-zoncd3rp.png",
         description: "3D animation and VFX software",
-        proficiency: 80,
+        proficiency: 70,
       },
     ],
   }
