@@ -4,12 +4,11 @@ import { useLanguage } from "@/components/language-provider"
 import PageTransition from "@/components/page-transition"
 import { motion } from "framer-motion"
 import { useState } from "react"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Star, ExternalLink } from "lucide-react"
+import { Star } from "lucide-react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 
 export default function BooksPage() {
   const { t } = useLanguage()
@@ -21,90 +20,116 @@ export default function BooksPage() {
       title: "Eloquent JavaScript",
       author: "Marijn Haverbeke",
       description: "A modern introduction to programming with JavaScript.",
-      image: "/placeholder.svg?height=400&width=300&query=javascript book cover with dark theme",
+      image: "/javascript-book-cover-dark.png",
       category: "programming",
       rating: 4.5,
-      link: "https://eloquentjavascript.net/",
     },
     {
       id: 2,
-      title: "Clean Code",
-      author: "Robert C. Martin",
-      description: "A handbook of agile software craftsmanship.",
-      image: "/placeholder.svg?height=400&width=300&query=clean code book cover with dark theme",
+      title: "3D Math Primer for Graphics and Game Development",
+      author: "Fletcher Dunn & Ian Parberry",
+      description:
+        "A comprehensive guide to the mathematics needed for 3D graphics and game development, covering vectors, matrices, transformations, and more.",
+      image: "/3d-math-primer-cover.jpg",
       category: "programming",
-      rating: 4.7,
-      link: "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882",
+      rating: 5.0,
     },
     {
       id: 3,
-      title: "Design Patterns",
-      author: "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
-      description: "Elements of Reusable Object-Oriented Software.",
-      image: "/placeholder.svg?height=400&width=300&query=design patterns book cover with dark theme",
+      title: "Programming: Principles and Practice Using C++",
+      author: "Bjarne Stroustrup",
+      description:
+        "A comprehensive introduction to programming using C++ by the creator of the language himself, focusing on fundamental concepts and best practices.",
+      image: "/cpp-principles-cover.jpg",
       category: "programming",
-      rating: 4.6,
-      link: "https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612",
+      rating: 5.0,
     },
     {
       id: 4,
-      title: "Don't Make Me Think",
-      author: "Steve Krug",
-      description: "A common sense approach to web usability.",
-      image: "/placeholder.svg?height=400&width=300&query=dont make me think book cover with dark theme",
-      category: "design",
-      rating: 4.8,
-      link: "https://www.amazon.com/Dont-Make-Think-Revisited-Usability/dp/0321965515",
+      title: "The Odyssey",
+      author: "Homer",
+      description:
+        "One of the oldest works of literature, this epic poem follows Odysseus's journey home after the Trojan War, exploring themes of perseverance, identity, and homecoming.",
+      image: "/odyssey-cover.jpg",
+      category: "philosophy",
+      rating: 5.0,
     },
     {
       id: 5,
-      title: "Refactoring UI",
-      author: "Adam Wathan & Steve Schoger",
-      description: "Learn how to design beautiful user interfaces.",
-      image: "/placeholder.svg?height=400&width=300&query=refactoring ui book cover with dark theme",
-      category: "design",
-      rating: 4.9,
-      link: "https://www.refactoringui.com/book",
+      title: "Meditations",
+      author: "Marcus Aurelius",
+      description:
+        "Personal writings of the Roman Emperor Marcus Aurelius, offering profound Stoic philosophical reflections on purpose, virtue, and resilience in the face of life's challenges.",
+      image: "/meditations-cover.jpg",
+      category: "philosophy",
+      rating: 5.0,
     },
     {
       id: 6,
-      title: "The Design of Everyday Things",
-      author: "Don Norman",
-      description: "A powerful primer on how and why some products satisfy customers while others frustrate them.",
-      image: "/placeholder.svg?height=400&width=300&query=design of everyday things book cover with dark theme",
-      category: "design",
-      rating: 4.7,
-      link: "https://www.amazon.com/Design-Everyday-Things-Revised-Expanded/dp/0465050654",
+      title: "The Way of the Superior Man",
+      author: "David Deida",
+      description:
+        "A spiritual guide for men navigating career, relationships, and finding purpose in an ever-changing world.",
+      image: "/superior-man-cover.jpg",
+      category: "philosophy",
+      rating: 5.0,
     },
     {
       id: 7,
-      title: "The Lean Startup",
-      author: "Eric Ries",
-      description: "How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses.",
-      image: "/placeholder.svg?height=400&width=300&query=lean startup book cover with dark theme",
-      category: "business",
-      rating: 4.5,
-      link: "https://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898",
+      title: "A Guide to the Good Life: The Ancient Art of Stoic Joy",
+      author: "William B. Irvine",
+      description:
+        "A modern interpretation of Stoic philosophy, offering practical techniques for finding tranquility and meaning in today's world.",
+      image: "/stoic-joy-cover.jpg",
+      category: "philosophy",
+      rating: 4.0,
     },
     {
       id: 8,
-      title: "Zero to One",
-      author: "Peter Thiel",
-      description: "Notes on Startups, or How to Build the Future.",
-      image: "/placeholder.svg?height=400&width=300&query=zero to one book cover with dark theme",
-      category: "business",
-      rating: 4.6,
-      link: "https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296",
+      title: "The Myth of Sisyphus",
+      author: "Albert Camus",
+      description:
+        "A philosophical essay exploring the concept of the absurd and the search for meaning in an indifferent universe.",
+      image: "/sisyphus-cover.jpg",
+      category: "philosophy",
+      rating: 5.0,
     },
     {
       id: 9,
+      title: "Of Human Bondage",
+      author: "W. Somerset Maugham",
+      description:
+        "A semi-autobiographical novel exploring the human condition, the search for meaning, and the struggle for personal freedom.",
+      image: "/human-bondage-cover.jpg",
+      category: "philosophy",
+      rating: 5.0,
+    },
+    {
+      id: 10,
+      title: "The Lean Startup",
+      author: "Eric Ries",
+      description: "How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses.",
+      image: "/placeholder.svg?key=gtu6q",
+      category: "business",
+      rating: 4.5,
+    },
+    {
+      id: 11,
+      title: "Zero to One",
+      author: "Peter Thiel",
+      description: "Notes on Startups, or How to Build the Future.",
+      image: "/placeholder.svg?key=tjecs",
+      category: "business",
+      rating: 4.6,
+    },
+    {
+      id: 12,
       title: "Hooked",
       author: "Nir Eyal",
       description: "How to Build Habit-Forming Products.",
-      image: "/placeholder.svg?height=400&width=300&query=hooked book cover with dark theme",
+      image: "/placeholder.svg?key=fdcaf",
       category: "business",
       rating: 4.4,
-      link: "https://www.amazon.com/Hooked-How-Build-Habit-Forming-Products/dp/1591847788",
     },
   ]
 
@@ -128,8 +153,8 @@ export default function BooksPage() {
         <Tabs defaultValue="all" onValueChange={setActiveCategory} className="w-full mb-8">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="philosophy">Philosophy</TabsTrigger>
             <TabsTrigger value="programming">Programming</TabsTrigger>
-            <TabsTrigger value="design">Design</TabsTrigger>
             <TabsTrigger value="business">Business</TabsTrigger>
           </TabsList>
         </Tabs>
@@ -173,19 +198,6 @@ export default function BooksPage() {
                 <CardContent className="flex-grow">
                   <p className="text-muted-foreground">{book.description}</p>
                 </CardContent>
-                <CardFooter>
-                  <Button asChild variant="outline" className="w-full">
-                    <a
-                      href={book.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      Learn More
-                    </a>
-                  </Button>
-                </CardFooter>
               </Card>
             </motion.div>
           ))}
