@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import puppeteer, { Browser, Page, ElementHandle } from 'puppeteer';
+import puppeteer, { type Browser, type Page } from 'puppeteer-core';
+// @ts-ignore
+import chromium from '@sparticuz/chromium';
 import { format } from 'date-fns';
 
 export async function POST(req: NextRequest) {
@@ -17,14 +19,15 @@ export async function POST(req: NextRequest) {
       aspectRatio,
     } = await req.json();
     
+    // You might need to ensure this font URL is publicly accessible and correct for chromium.font
+    // await chromium.font('https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2');
+
+    const executablePath = await chromium.executablePath();
+
     browser = await puppeteer.launch({ 
-      headless: true, 
-      args: [
-        '--no-sandbox', 
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--font-render-hinting=none',
-      ]
+      args: chromium.args,
+      executablePath,
+      headless: chromium.headless, 
     });
     
     const page: Page = await browser.newPage();
@@ -201,7 +204,9 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   } finally {
-    if (browser) { await browser.close(); }
+    if (browser) {
+      await browser.close();
+    }
   }
 }
 
