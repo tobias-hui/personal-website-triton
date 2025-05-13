@@ -18,8 +18,10 @@ export async function POST(req: NextRequest) {
       aspectRatio,
     } = await req.json();
     
-    // You might need to ensure this font URL is publicly accessible and correct for chromium.font
-    // await chromium.font('https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2');
+    // Load Inter font (Latin characters primarily)
+    await chromium.font('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfAZ9hjg.woff2'); // Inter Regular
+    // Load Noto Sans SC (Simplified Chinese characters)
+    await chromium.font('https://fonts.gstatic.com/s/notosanssc/v30/k3kXo84MPvpLmixcA63oeALZKLdUwfRrm8_v.woff2'); // Noto Sans SC Regular
 
     const executablePath = await chromium.executablePath();
 
@@ -79,7 +81,7 @@ export async function POST(req: NextRequest) {
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            html, body { width: 100%; height: 100%; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: black; overflow: hidden; }
+            html, body { width: 100%; height: 100%; font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: black; overflow: hidden; }
             .card {
               width: 100%; height: 100%; display: flex; flex-direction: column;
               padding: ${cardPadding};
