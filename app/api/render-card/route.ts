@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import puppeteer, { type Browser, type Page } from 'puppeteer-core';
-// @ts-ignore
 import chromium from '@sparticuz/chromium';
 import { format } from 'date-fns';
 
