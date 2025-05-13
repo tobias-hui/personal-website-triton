@@ -181,7 +181,7 @@ export async function POST(req: NextRequest) {
     `;
         
     const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
-    await page.goto(dataUrl, { waitUntil: 'networkidle0', timeout: 10000 });
+    await page.goto(dataUrl, { waitUntil: 'networkidle0', timeout: 20000 });
     
     await page.evaluate(() => document.fonts.ready);
     await new Promise(resolve => setTimeout(resolve, 500)); // Additional wait for any final rendering
