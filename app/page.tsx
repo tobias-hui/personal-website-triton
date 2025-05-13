@@ -3,7 +3,7 @@
 import { useLanguage } from "@/components/language-provider"
 import PageTransition from "@/components/page-transition"
 import { motion } from "framer-motion"
-import { Copy, Check } from "lucide-react"
+import { Copy, Check, LayoutPanelLeft } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -58,6 +58,18 @@ export default function Home() {
   ]
 
   const bioText = `Kai Hui is a Chinese creator and programmer based in Shenzhen. In his second year of university, he began interning at the seed-funded startup Builtopia, gaining firsthand experience in the challenges of entrepreneurship. After participating in award-winning AI hackathons and building a profitable API service with former colleagues, he founded Tritonix in 2024, supported by former CEO Cheng Fu, to provide automated operation solutions for e-commerce brands. He adheres to the principles of Minimalist Entrepreneurship in his business approach.`
+
+  const tools = [
+    {
+      icon: LayoutPanelLeft,
+      title: "Social Media Card Generator",
+      description: "Easily create and customize beautiful social media cards. Supports Markdown, multiple themes, and pagination for long content. One-click export and share on platforms like Xiaohongshu, Weibo, etc.",
+      href: "/card-generator",
+      cta: "Try it Out",
+      imageUrl: "/card-generator.png",
+    },
+    // Add more tools here in the future
+  ]
 
   const copyBio = () => {
     navigator.clipboard.writeText(bioText)
@@ -211,6 +223,66 @@ export default function Home() {
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tools Showcase Section */}
+      <div id="tools-showcase" className="bg-black py-12 md:py-16">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-12 text-center"
+            >
+              <h2 className="text-3xl font-bold mb-4">My Practical Tools</h2>
+              <p className="text-xl text-zinc-400">Some small tools I've developed, hoping they can help you.</p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+              {tools.map((tool, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="bg-zinc-900/50 rounded-lg p-6 md:p-8 border border-zinc-800 hover:border-purple-500/50 transition-colors duration-300 shadow-lg hover:shadow-purple-500/20 overflow-hidden"
+                >
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
+                    {/* Left side: Text content & CTA */}
+                    <div className="flex-grow md:w-1/2">
+                      <div className="flex items-center mb-3">
+                        <tool.icon className="h-8 w-8 text-purple-400 mr-3 flex-shrink-0" />
+                        <h3 className="text-2xl font-bold text-white">{tool.title}</h3>
+                      </div>
+                      <p className="text-zinc-400 mb-6 text-sm leading-relaxed md:text-base">{tool.description}</p>
+                      <Link href={tool.href} passHref>
+                        <Button variant="outline" className="bg-purple-600 hover:bg-purple-700 text-white border-purple-600 hover:border-purple-700 px-6 py-3 text-base">
+                          {tool.cta}
+                        </Button>
+                      </Link>
+                    </div>
+
+                    {/* Right side: Image */}
+                    {tool.imageUrl && (
+                      <div className="md:w-1/2 mt-6 md:mt-0 flex justify-center md:justify-end">
+                        <div className="relative w-full max-w-md aspect-[4/3] rounded-xl overflow-hidden shadow-2xl group">
+                          <Image 
+                            src={tool.imageUrl} 
+                            alt={`${tool.title} preview`} 
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                          />
+                           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

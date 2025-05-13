@@ -13,6 +13,7 @@ const navItems = [
   { href: "/blog", label: "nav.article" },
   { href: "/books", label: "nav.books" },
   { href: "/tech-stack", label: "nav.tech" },
+  { href: "/#tools-showcase", label: "nav.tools" },
   { href: "/reminder", label: "nav.reminder" },
 ]
 
@@ -41,14 +42,14 @@ export default function Header() {
             <nav className="hidden md:flex gap-6">
               {navItems.map((item, i) => (
                 <div key={i} className="text-sm font-medium text-zinc-400">
-                  {item.label}
+                  <div className="h-4 w-16 bg-zinc-700 rounded animate-pulse"></div>
                 </div>
               ))}
             </nav>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-9 w-9"></div>
-            <div className="h-9 w-9 md:hidden"></div>
+            <div className="h-9 w-9 bg-zinc-700 rounded md:hidden animate-pulse"></div>
+            <div className="h-9 w-9 bg-zinc-700 rounded animate-pulse"></div>
           </div>
         </div>
       </header>
