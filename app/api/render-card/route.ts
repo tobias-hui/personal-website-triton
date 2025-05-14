@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
     // Construct absolute file paths for fonts in the public directory
     const interFontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.woff2');
-    const notoFontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSans-Regular.ttf');
+    const notoFontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSansCJKsc-VF.otf');
 
     await chromium.font(interFontPath);
     await chromium.font(notoFontPath);
