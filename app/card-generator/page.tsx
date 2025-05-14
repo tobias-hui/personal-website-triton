@@ -294,11 +294,12 @@ export default function CardGenerator() {
     const originalTab = activeTab;
     try {
       setExporting(true);
-      setActiveTab("preview");
+      // setActiveTab("preview"); // Removed: Keep current tab active, cardRef is on Edit tab's card
 
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      // await new Promise((resolve) => setTimeout(resolve, 300)); // May not be needed if not switching tabs
 
       if (!cardRef.current) {
+        console.error("Card element (cardRef.current) not found for export.");
         throw new Error("Card element not found for export.");
       }
 
@@ -339,7 +340,7 @@ export default function CardGenerator() {
 
     try {
       setExporting(true);
-      setActiveTab("preview"); // Switch to preview tab
+      // setActiveTab("preview"); // Removed: Keep current tab active, cardRef is on Edit tab's card
 
       const zip = new JSZip();
       const imgFolder = zip.folder("social-cards");
