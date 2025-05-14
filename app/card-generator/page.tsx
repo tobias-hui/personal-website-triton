@@ -232,7 +232,7 @@ export default function CardGenerator() {
         }
         currentPageContent = paragraph;
         currentPageLength = paragraphLength;
-      } else {
+            } else {
         currentPageContent += (currentPageContent ? "\n\n" : "") + paragraph;
         currentPageLength += paragraphLength;
       }
@@ -680,26 +680,26 @@ export default function CardGenerator() {
                     <div className="flex justify-between items-center">
                       <CardTitle>Preview</CardTitle>
                       {pages.length > 1 && (
-                        <div className="flex items-center space-x-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
-                            disabled={currentPage === 0}
-                          >
-                            Previous
-                          </Button>
-                          <span key={`page-${currentPage}-of-${pages.length}`}>
-                            {currentPage + 1} / {pages.length}
-                          </span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setCurrentPage(Math.min(pages.length - 1, currentPage + 1))}
-                            disabled={currentPage === pages.length - 1}
-                          >
-                            Next
-                          </Button>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                              disabled={currentPage === 0}
+                            >
+                              Previous
+                            </Button>
+                            <span key={`page-${currentPage}-of-${pages.length}`}>
+                              {currentPage + 1} / {pages.length}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setCurrentPage(Math.min(pages.length - 1, currentPage + 1))}
+                              disabled={currentPage === pages.length - 1}
+                            >
+                              Next
+                            </Button>
                         </div>
                       )}
                     </div>
@@ -879,7 +879,7 @@ export default function CardGenerator() {
                       "w-full",
                       selectedTheme.textColor,
                       selectedTheme.contentClass || "",
-                      "card-content-render-area", 
+                      "card-content-render-area",
                     )}
                   >
                     <div className="prose prose-invert prose-sm max-w-none">

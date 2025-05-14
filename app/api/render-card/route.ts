@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import puppeteer, { type Browser, type Page } from 'puppeteer-core';
 import chromium from '@sparticuz/chromium';
 import { format } from 'date-fns';
+import path from 'path';
 
 export async function POST(req: NextRequest) {
   let browser: Browser | null = null;
@@ -18,9 +19,12 @@ export async function POST(req: NextRequest) {
       aspectRatio,
     } = await req.json();
     
-    // Load fonts from the public/fonts directory
-    await chromium.font('/fonts/Inter-Regular.woff2');
-    await chromium.font('/fonts/Noto-Sans-regular.woff2');
+    // Construct absolute file paths for fonts in the public directory
+    const interFontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.woff2');
+    const notoFontPath = path.join(process.cwd(), 'public', 'fonts', 'Noto-Sans-regular.woff2');
+
+    await chromium.font(interFontPath);
+    await chromium.font(notoFontPath);
 
     const executablePath = await chromium.executablePath();
 
