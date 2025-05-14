@@ -31,7 +31,11 @@ export async function POST(req: NextRequest) {
     const executablePath = await chromium.executablePath();
 
     browser = await puppeteer.launch({ 
-      args: chromium.args,
+      args: [
+        ...chromium.args,
+        '--disable-font-subpixel-positioning',
+        '--font-render-hinting=full',
+      ],
       executablePath,
       headless: chromium.headless, 
     });
