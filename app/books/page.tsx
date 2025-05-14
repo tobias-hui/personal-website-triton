@@ -162,18 +162,18 @@ export default function BooksPage() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold">{t("books.title")}</h1>
-          <p className="mt-4 text-xl text-muted-foreground">
+          <h1 className="text-3xl sm:text-4xl font-bold">{t("books.title")}</h1>
+          <p className="mt-4 text-lg sm:text-xl text-muted-foreground">
             A curated collection of books that have shaped my knowledge and perspective
           </p>
         </motion.div>
 
         <Tabs defaultValue="all" onValueChange={setActiveCategory} className="w-full mb-8">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="philosophy">Philosophy</TabsTrigger>
-            <TabsTrigger value="programming">Programming</TabsTrigger>
-            <TabsTrigger value="business">Business</TabsTrigger>
+          <TabsList className="flex flex-wrap h-auto justify-center sm:justify-start">
+            <TabsTrigger value="all" className="mb-1 sm:mb-0 mr-1">All</TabsTrigger>
+            <TabsTrigger value="philosophy" className="mb-1 sm:mb-0 mr-1">Philosophy</TabsTrigger>
+            <TabsTrigger value="programming" className="mb-1 sm:mb-0 mr-1">Programming</TabsTrigger>
+            <TabsTrigger value="business" className="mb-1 sm:mb-0">Business</TabsTrigger>
           </TabsList>
         </Tabs>
 

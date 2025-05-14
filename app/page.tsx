@@ -106,7 +106,7 @@ export default function Home() {
               <h1 className="text-xl font-bold tracking-tight sm:text-3xl md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
                 Create, Fail, Repeat until Success
               </h1>
-              <p className="mt-4 text-xl text-zinc-400 mb-12">
+              <p className="mt-4 text-lg sm:text-xl text-zinc-400 mb-12">
                 Minimalist Entrepreneur, Full-Stack Developer, Stoic
               </p>
             </motion.div>
@@ -156,7 +156,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="mt-8"
             >
-              <h2 className="text-2xl font-bold mb-2">Bio</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">Bio</h2>
               <p className="text-zinc-400 text-sm mb-3">
                 This is made for journalists, podcast hosts, and event organizers to copy-and-paste.
               </p>
@@ -186,7 +186,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="mb-6"
             >
-              <h2 className="text-2xl font-bold">Experience</h2>
+              <h2 className="text-xl sm:text-2xl font-bold">Experience</h2>
             </motion.div>
 
             <motion.div
@@ -201,10 +201,10 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
+                  className="bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-800"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold">{job.position}</h3>
+                    <h3 className="text-lg sm:text-xl font-bold">{job.position}</h3>
                     <span className="text-sm text-zinc-400">{job.year}</span>
                   </div>
                   {job.companyUrl ? (
@@ -237,8 +237,8 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="mb-12 text-center"
             >
-              <h2 className="text-3xl font-bold mb-4">My Practical Tools</h2>
-              <p className="text-xl text-zinc-400">Some small tools I've developed, hoping they can help you.</p>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">My Practical Tools</h2>
+              <p className="text-lg sm:text-xl text-zinc-400">Some small tools I've developed, hoping they can help you.</p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
@@ -255,7 +255,7 @@ export default function Home() {
                     <div className="flex-grow md:w-1/2">
                       <div className="flex items-center mb-3">
                         <tool.icon className="h-8 w-8 text-purple-400 mr-3 flex-shrink-0" />
-                        <h3 className="text-2xl font-bold text-white">{tool.title}</h3>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white">{tool.title}</h3>
                       </div>
                       <p className="text-zinc-400 mb-6 text-sm leading-relaxed md:text-base">{tool.description}</p>
                       <Link href={tool.href} passHref>
@@ -267,7 +267,7 @@ export default function Home() {
 
                     {/* Right side: Image */}
                     {tool.imageUrl && (
-                      <div className="md:w-1/2 mt-6 md:mt-0 flex justify-center md:justify-end">
+                      <div className="w-full md:w-1/2 mt-6 md:mt-0 flex justify-center md:justify-end">
                         <div className="relative w-full max-w-md aspect-[4/3] rounded-xl overflow-hidden shadow-2xl group">
                           <Image 
                             src={tool.imageUrl} 
@@ -297,7 +297,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <h2 className="text-2xl font-bold mb-4">AI Tools Mastery</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-4">AI Tools Mastery</h2>
               <p className="text-zinc-400">
                 As a modern developer, I leverage cutting-edge AI tools to enhance productivity and creativity. These
                 tools have revolutionized the development workflow, enabling faster prototyping and more efficient
@@ -310,13 +310,13 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
+                className="bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-800"
               >
                 <div className="flex flex-row items-center gap-4 mb-4">
                   <div className="relative h-8 w-8">
                     <Image src="https://cursor.sh/favicon.ico" alt="Cursor" fill className="object-contain" />
                   </div>
-                  <h3 className="text-xl font-bold">Cursor</h3>
+                  <h3 className="text-lg sm:text-xl font-bold">Cursor</h3>
                 </div>
                 <p className="text-zinc-400">
                   AI-powered code editor designed to help developers write, understand, and improve code faster.
@@ -327,7 +327,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
+                className="bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-800"
               >
                 <div className="flex flex-row items-center gap-4 mb-4">
                   <div className="relative h-8 w-8">
@@ -338,7 +338,7 @@ export default function Home() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-xl font-bold">Vercel's V0</h3>
+                  <h3 className="text-lg sm:text-xl font-bold">Vercel's V0</h3>
                 </div>
                 <p className="text-zinc-400">
                   AI-powered code editor designed to help developers write, understand, and improve code faster.
@@ -349,13 +349,13 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
+                className="bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-800"
               >
                 <div className="flex flex-row items-center gap-4 mb-4">
                   <div className="relative h-8 w-8">
                     <Image src="https://lennysbundle.com/images/logos/bolt.jpg" alt="Bolt" fill className="object-contain" />
                   </div>
-                  <h3 className="text-xl font-bold">Bolt</h3>
+                  <h3 className="text-lg sm:text-xl font-bold">Bolt</h3>
                 </div>
                 <p className="text-zinc-400">
                   AI-powered code editor designed to help developers write, understand, and improve code faster.
@@ -366,7 +366,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="bg-zinc-900/50 rounded-lg p-6 border border-zinc-800"
+                className="bg-zinc-900/50 rounded-lg p-4 sm:p-6 border border-zinc-800"
               >
                 <div className="flex flex-row items-center gap-4 mb-4">
                   <div className="relative h-8 w-8">
@@ -377,7 +377,7 @@ export default function Home() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-xl font-bold">Perplexity</h3>
+                  <h3 className="text-lg sm:text-xl font-bold">Perplexity</h3>
                 </div>
                 <p className="text-zinc-400">
                   AI-powered code editor designed to help developers write, understand, and improve code faster.

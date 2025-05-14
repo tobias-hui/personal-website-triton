@@ -125,6 +125,11 @@ export default function CardGenerator() {
   const contentAreaRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // Refs for scaling the card preview wrappers
+  const editTabCardWrapperRef = useRef<HTMLDivElement>(null);
+  const previewTabCardWrapperRef = useRef<HTMLDivElement>(null);
+  // cardRef will point to the unscaled card in the Edit tab, used as the source for html-to-image
+
   const getCardDimensions = useCallback(() => {
     let cardClientWidth = 0;
     if (cardRef.current) {
@@ -398,15 +403,21 @@ export default function CardGenerator() {
   }
 
   // Helper function to calculate aspect ratio styles
-  const getAspectRatioStyle = (ratio: string) => {
-    const [width, height] = ratio.split(":").map(Number)
+  const getAspectRatioStyle = useCallback((ratio: string) => {
+    const [width, height] = ratio.split(":").map(Number);
+    const definedMaxWidth = ratio === "3:4" || ratio === "9:16" ? "450px" : "600px";
+    const numericWidth = parseFloat(definedMaxWidth);
+    const numericHeight = (numericWidth / width) * height; // Calculate height based on ratio
+
     return {
       aspectRatio: `${width} / ${height}`,
-      width: "100%",
-      maxWidth: ratio === "3:4" || ratio === "9:16" ? "450px" : "600px",
-      minHeight: "400px",
-    }
-  }
+      width: definedMaxWidth,
+      maxWidth: definedMaxWidth, 
+      // minHeight: "400px", // minHeight might conflict with scaled wrapper height adjustment
+      height: `${numericHeight}px`, // Explicitly set height based on aspect ratio and width
+      margin: "0 auto", 
+    };
+  }, []);
 
   // Get card padding based on aspect ratio
   const getCardPadding = (ratio: string) => {
@@ -456,19 +467,75 @@ export default function CardGenerator() {
     return "shadow-xl" // Default
   }
 
+  // Effect to handle card scaling for preview
+  useEffect(() => {
+    const scaleElement = (element: HTMLDivElement) => {
+        element.style.transformOrigin = 'top left';
+        const wrapperWidth = element.offsetWidth;
+        const cardStyle = getAspectRatioStyle(aspectRatio);
+        const cardDesignedWidth = parseFloat(cardStyle.width);
+
+        if (wrapperWidth > 0 && cardDesignedWidth > 0) {
+            if (wrapperWidth < cardDesignedWidth) {
+                const scale = wrapperWidth / cardDesignedWidth;
+                element.style.transform = `scale(${scale})`;
+                const cardDesignedHeight = parseFloat(cardStyle.height);
+                if (cardDesignedHeight > 0) {
+                    element.style.height = `${cardDesignedHeight * scale}px`;
+                }
+            } else {
+                element.style.transform = 'scale(1)';
+                element.style.height = cardStyle.height;
+            }
+        } else {
+            element.style.transform = 'scale(1)';
+            element.style.height = cardStyle.height;
+        }
+    };
+
+    const currentActiveWrapperElement = activeTab === 'edit' ? editTabCardWrapperRef.current : previewTabCardWrapperRef.current;
+    if (currentActiveWrapperElement) {
+        scaleElement(currentActiveWrapperElement);
+    }
+
+    const currentInactiveWrapperElement = activeTab === 'edit' ? previewTabCardWrapperRef.current : editTabCardWrapperRef.current;
+    if (currentInactiveWrapperElement) {
+        scaleElement(currentInactiveWrapperElement);
+    }
+
+    let observer: ResizeObserver | undefined;
+    const observedElement = activeTab === 'edit' ? editTabCardWrapperRef.current : previewTabCardWrapperRef.current;
+
+    if (observedElement) {
+        observer = new ResizeObserver(() => {
+            const currentlyActiveElementForObserver = activeTab === 'edit' ? editTabCardWrapperRef.current : previewTabCardWrapperRef.current;
+            if (currentlyActiveElementForObserver && currentlyActiveElementForObserver === observedElement) {
+                 scaleElement(currentlyActiveElementForObserver);
+            }
+        });
+        observer.observe(observedElement);
+    }
+
+    return () => {
+        if (observer && observedElement) {
+            observer.unobserve(observedElement);
+        }
+    };
+}, [activeTab, aspectRatio, selectedTheme, getAspectRatioStyle]);
+
   return (
     <PageTransition>
-      <div className="container py-12">
+      <div className="container py-6 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Social Media Card Generator
           </h1>
-          <p className="mt-4 text-xl text-muted-foreground">
+          <p className="mt-4 text-lg sm:text-xl text-muted-foreground">
             Transform your text content into beautiful social media sharing cards.
           </p>
         </motion.div>
@@ -542,8 +609,8 @@ export default function CardGenerator() {
 
                     <div className="space-y-2">
                       <Label htmlFor="avatar">Avatar</Label>
-                      <div className="flex items-center space-x-4">
-                        <div className="relative h-16 w-16 overflow-hidden rounded-lg">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                        <div className="relative h-16 w-16 overflow-hidden rounded-lg flex-shrink-0">
                           <Image src={avatarSrc || "/placeholder.svg"} alt="Avatar" fill className="object-cover" />
                         </div>
                         <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
@@ -662,7 +729,7 @@ export default function CardGenerator() {
                     <CardDescription>Live preview of the generated social media card.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex justify-center">
+                    <div ref={editTabCardWrapperRef} className="w-full">
                       <div
                         ref={cardRef}
                         id="card-for-export-edit-tab"
@@ -675,7 +742,6 @@ export default function CardGenerator() {
                           "flex flex-col overflow-hidden",
                         )}
                       >
-                        {/* Card Header */}
                         <div ref={headerRef} className={cn("flex justify-between items-center", getHeaderSize(aspectRatio))}>
                           <div className="flex items-center space-x-3">
                             <div className="relative h-12 w-12 overflow-hidden rounded-lg">
@@ -696,7 +762,6 @@ export default function CardGenerator() {
                           <div className={selectedTheme.secondaryTextColor}>{format(date, "yyyy/MM/dd")}</div>
                         </div>
 
-                        {/* Card Content */}
                         <div
                           ref={contentAreaRef}
                           className={cn(
@@ -719,7 +784,6 @@ export default function CardGenerator() {
                           </div>
                         </div>
 
-                        {/* Card Footer */}
                         <div
                           ref={footerRef}
                           className={cn(
@@ -743,7 +807,7 @@ export default function CardGenerator() {
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="theme">Theme</Label>
-                      <div className="grid grid-cols-2 gap-2 mb-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                         {themes.map((theme) => (
                           <div
                             key={theme.id}
@@ -790,11 +854,10 @@ export default function CardGenerator() {
           </TabsContent>
 
           <TabsContent value="preview" className="mt-6">
-            <div className="flex justify-center">
+            <div ref={previewTabCardWrapperRef} className="w-full flex justify-center">
               <div
-                ref={cardRef}
-                style={getAspectRatioStyle(aspectRatio)}
                 id="card-for-export-preview-tab"
+                style={getAspectRatioStyle(aspectRatio)}
                 className={cn(
                   getCardBorderRadius(selectedTheme.id),
                   getCardShadow(selectedTheme.id),
@@ -803,7 +866,6 @@ export default function CardGenerator() {
                   "flex flex-col overflow-hidden",
                 )}
               >
-                {/* Card Header */}
                 <div className={cn("flex justify-between items-center", getHeaderSize(aspectRatio))}>
                   <div className="flex items-center space-x-3">
                     <div className="relative h-12 w-12 overflow-hidden rounded-lg">
@@ -824,7 +886,6 @@ export default function CardGenerator() {
                   <div className={selectedTheme.secondaryTextColor}>{format(date, "yyyy/MM/dd")}</div>
                 </div>
 
-                {/* Card Content */}
                 <div className={cn(
                   "flex-grow flex items-center justify-center min-h-0", 
                   selectedTheme.extraClasses || "",
@@ -844,7 +905,6 @@ export default function CardGenerator() {
                   </div>
                 </div>
 
-                {/* Card Footer */}
                 <div
                   className={cn(
                     `border-t ${selectedTheme.borderClass} text-center`,
@@ -912,7 +972,7 @@ export default function CardGenerator() {
 
         {/* Features Section */}
         <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">Card Generator Features</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center">Card Generator Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
@@ -981,7 +1041,7 @@ export default function CardGenerator() {
 
         {/* How to Use Section */}
         <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-2 text-center">How to Use the Social Media Card Generator</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-center">How to Use the Social Media Card Generator</h2>
           <p className="text-center text-muted-foreground mb-8">
             Learn to use our free online tool to effortlessly create professional-grade social media cards. This guide
             walks you through every step, from content input to image export, helping you boost engagement on platforms
@@ -1045,7 +1105,7 @@ export default function CardGenerator() {
 
         {/* Tips Section */}
         <div className="mt-16 mb-8">
-          <h2 className="text-3xl font-bold mb-8 text-center">Creation Tips</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center">Creation Tips</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
