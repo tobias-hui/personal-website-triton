@@ -196,6 +196,26 @@ export async function POST(req: NextRequest) {
 
     const cardElement = await page.$('#card');
     if (!cardElement) { throw new Error('Card element not found'); }
+
+    // Get details of the rendered markdown content for debugging
+    const debugInfo = await page.evaluate(() => {
+      const markdownContentEl = document.querySelector('.markdown-content');
+      if (!markdownContentEl) return { error: '.markdown-content not found' };
+
+      const firstP = markdownContentEl.querySelector('p');
+      const firstLi = markdownContentEl.querySelector('li');
+      
+      return {
+        markdownContentHTML: markdownContentEl.innerHTML,
+        firstPText: firstP ? firstP.innerText : null,
+        firstPColor: firstP ? window.getComputedStyle(firstP).color : null,
+        firstPDisplay: firstP ? window.getComputedStyle(firstP).display : null,
+        firstLiText: firstLi ? firstLi.innerText : null,
+        firstLiColor: firstLi ? window.getComputedStyle(firstLi).color : null,
+        firstLiDisplay: firstLi ? window.getComputedStyle(firstLi).display : null,
+      };
+    });
+    console.log('Debug info from Puppeteer page:', debugInfo);
     
     const screenshot = await cardElement.screenshot({ type: 'png', omitBackground: false });
     
