@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
       aspectRatio,
     } = await req.json();
     
+    console.log('Received content from client:', content); // Log received content
+
     // Construct absolute file paths for fonts in the public directory
     const interFontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.woff2');
     const notoFontPath = path.join(process.cwd(), 'public', 'fonts', 'Noto-Sans-regular.woff2');
@@ -215,7 +217,7 @@ export async function POST(req: NextRequest) {
 
 function renderEnhancedMarkdown(text: string): string {
   if (!text) return '';
-  return text
+  const htmlOutput = text
     .replace(/^# (.*$)/gm, '<h1>$1</h1>')
     .replace(/^## (.*$)/gm, '<h2>$1</h2>')
     .replace(/^### (.*$)/gm, '<h3>$1</h3>')
@@ -236,4 +238,6 @@ function renderEnhancedMarkdown(text: string): string {
       return `<p>${paragraph.replace(/\n/g, '<br>')}</p>`; // Preserve single line breaks within paragraphs
     })
     .join('');
+  console.log('Output of renderEnhancedMarkdown:', htmlOutput); // Log output of markdown function
+  return htmlOutput;
 } 
