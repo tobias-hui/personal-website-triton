@@ -20,7 +20,9 @@ import { cn } from "@/lib/utils"
 import ReactMarkdown from "react-markdown"
 import Image from "next/image"
 import JSZip from "jszip"
-import html2canvas from "html2canvas"
+// import html2canvas from "html2canvas"; // Reverting to dom-to-image-more
+// import domtoimage from 'dom-to-image-more'; // Commenting out dom-to-image-more
+import * as htmlToImage from 'html-to-image'; // Added html-to-image import
 
 // Theme options for the card
 const themes = [
@@ -284,146 +286,100 @@ export default function CardGenerator() {
 
   // Export single card as image
   const exportSingleCard = async () => {
-    // Save current tab state
-    const originalTab = activeTab
-
+    const originalTab = activeTab;
     try {
-      setExporting(true)
+      setExporting(true);
+      setActiveTab("preview");
 
-      // Force switch to preview tab to ensure what we capture is the preview
-      setActiveTab("preview")
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      // Wait for sufficient time for the preview to render completely
-      await new Promise((resolve) => setTimeout(resolve, 300))
-
-      // Send request to server-side rendering API
-      const absoluteAvatarSrc = avatarSrc.startsWith('/') 
-        ? `${window.location.origin}${avatarSrc}` 
-        : (avatarSrc.startsWith('data:') ? avatarSrc : `${window.location.origin}${avatarSrc}`);
-
-      console.log("Exporting with avatar:", absoluteAvatarSrc.substring(0, 50) + "...");
-
-      const response = await fetch('/api/render-card', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          handle,
-          verified,
-          date,
-          content: pages[currentPage] || '', // Send current page content
-          footer,
-          avatarSrc: absoluteAvatarSrc, // Send absolute URL
-          theme: selectedTheme,
-          aspectRatio,
-          // currentPage is not sent as API renders one image based on content
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to render card on server')
+      if (!cardRef.current) {
+        throw new Error("Card element not found for export.");
       }
 
-      // Get the image blob
-      const blob = await response.blob()
+      const options = {
+        quality: 0.98, // For html-to-image, this is mainly for toJpeg/toWebp
+        cacheBust: true,
+        // backgroundColor: '#000000', // Can be used if a specific background is needed for PNG
+        pixelRatio: 2, // Added to increase image clarity
+      };
       
-      // Create a URL for the blob
-      const url = URL.createObjectURL(blob)
+      const dataUrl = await htmlToImage.toPng(cardRef.current, options); // Using htmlToImage.toPng
       
-      // Create a link to download the image
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `social-card-${format(date, 'yyyy-MM-dd')}.png`
-      link.click()
-      
-      // Clean up
-      URL.revokeObjectURL(url)
+      const link = document.createElement('a');
+      link.download = `social-card-${format(date, 'yyyy-MM-dd')}.png`;
+      link.href = dataUrl;
+      link.click();
+
     } catch (error) {
-      console.error("Error exporting card:", error)
-      alert("Failed to export card. Please try again.")
+      console.error("Error exporting card:", error);
+      alert("Failed to export card. Please try again.");
     } finally {
-      // Restore original tab state
-      setActiveTab(originalTab)
-      setExporting(false)
+      setActiveTab(originalTab);
+      setExporting(false);
     }
-  }
+  };
 
   // Export all cards as a zip file
   const exportAllCards = async () => {
-    if (!cardRef.current || pages.length <= 1) return
+    if (!cardRef.current || pages.length <= 1) {
+      if (pages.length === 1) { // If only one page, call single export
+        await exportSingleCard();
+      }
+      return;
+    }
 
-    // Save current tab and page state
-    const originalTab = activeTab
-    const currentPageBackup = currentPage
+    const originalTab = activeTab;
+    const currentPageBackup = currentPage;
 
     try {
-      setExporting(true)
+      setExporting(true);
+      setActiveTab("preview"); // Switch to preview tab
 
-      // Force switch to preview tab
-      setActiveTab("preview")
+      const zip = new JSZip();
+      const imgFolder = zip.folder("social-cards");
 
-      const zip = new JSZip()
-      const imgFolder = zip.folder("social-cards")
+      const options = {
+        quality: 0.98, // For html-to-image, this is mainly for toJpeg/toWebp
+        cacheBust: true,
+        // backgroundColor: '#000000',
+        pixelRatio: 2, // Added to increase image clarity
+      };
 
       for (let i = 0; i < pages.length; i++) {
-        setCurrentPage(i)
+        setCurrentPage(i);
+        await new Promise((resolve) => setTimeout(resolve, 400));
 
-        // Wait for rendering
-        await new Promise((resolve) => setTimeout(resolve, 300))
-
-        // Server-side rendering API
-        const absoluteAvatarSrcBatch = avatarSrc.startsWith('/') 
-          ? `${window.location.origin}${avatarSrc}` 
-          : (avatarSrc.startsWith('data:') ? avatarSrc : `${window.location.origin}${avatarSrc}`);
-
-        console.log("Exporting batch card with avatar:", absoluteAvatarSrcBatch.substring(0, 50) + "...");
-
-        const response = await fetch('/api/render-card', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username,
-            handle,
-            verified,
-            date,
-            content: pages[i] || '',
-            footer,
-            avatarSrc: absoluteAvatarSrcBatch, // Send absolute URL
-            theme: selectedTheme,
-            aspectRatio,
-            // currentPage for server-side is implicitly handled by sending specific page content
-          }),
-        })
-
-        if (!response.ok) {
-          throw new Error(`Failed to render card ${i+1} on server`)
+        if (!cardRef.current) {
+          console.error(`Card element not found for page ${i + 1}`);
+          continue; 
         }
-
-        // Convert response to array buffer and add to zip
-        const imageArrayBuffer = await response.arrayBuffer()
-        imgFolder?.file(`social-card-${format(date, "yyyy-MM-dd")}-${i + 1}.png`, imageArrayBuffer)
+        
+        const blob = await htmlToImage.toBlob(cardRef.current, options); // Using htmlToImage.toBlob
+        
+        if (blob instanceof Blob) {
+          imgFolder?.file(`social-card-${format(date, "yyyy-MM-dd")}-${i + 1}.png`, blob);
+        } else {
+          console.error(`Failed to generate valid blob for page ${i + 1}. Blob result:`, blob);
+        }
       }
 
-      // Generate and download zip file
-      const zipContent = await zip.generateAsync({ type: "blob" })
-      const link = document.createElement("a")
-      link.href = URL.createObjectURL(zipContent)
-      link.download = `social-cards-${format(date, "yyyy-MM-dd")}.zip`
-      link.click()
+      const zipContent = await zip.generateAsync({ type: "blob" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(zipContent);
+      link.download = `social-cards-${format(date, "yyyy-MM-dd")}.zip`;
+      link.click();
+      URL.revokeObjectURL(link.href); // Clean up blob URL
+
     } catch (error) {
-      console.error("Error exporting cards:", error)
-      alert("Failed to export cards. Please try again.")
+      console.error("Error exporting cards:", error);
+      alert("Failed to export cards. Please try again.");
     } finally {
-      // Restore original state
-      setCurrentPage(currentPageBackup)
-      setActiveTab(originalTab)
-      setExporting(false)
+      setCurrentPage(currentPageBackup);
+      setActiveTab(originalTab);
+      setExporting(false);
     }
-  }
+  };
 
   // Export cards based on page count
   const exportCards = async () => {
@@ -723,7 +679,7 @@ export default function CardGenerator() {
                         <div ref={headerRef} className={cn("flex justify-between items-center", getHeaderSize(aspectRatio))}>
                           <div className="flex items-center space-x-3">
                             <div className="relative h-12 w-12 overflow-hidden rounded-lg">
-                              <Image src={avatarSrc || "/placeholder.svg"} alt="Avatar" fill className="object-cover" />
+                              <Image src={avatarSrc || "/placeholder.svg"} alt="Avatar" fill className="object-cover" unoptimized={true} />
                             </div>
                             <div>
                               <div className="flex items-center">
@@ -851,7 +807,7 @@ export default function CardGenerator() {
                 <div className={cn("flex justify-between items-center", getHeaderSize(aspectRatio))}>
                   <div className="flex items-center space-x-3">
                     <div className="relative h-12 w-12 overflow-hidden rounded-lg">
-                      <Image src={avatarSrc || "/placeholder.svg"} alt="Avatar" fill className="object-cover" />
+                      <Image src={avatarSrc || "/placeholder.svg"} alt="Avatar" fill className="object-cover" unoptimized={true} />
                     </div>
                     <div>
                       <div className="flex items-center">
