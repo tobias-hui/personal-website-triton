@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     } = await req.json();
     
     // Load Inter font (Latin characters primarily)
-    await chromium.font('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfAZ9hjg.woff2'); // Inter Regular
+    await chromium.font('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2'); // Inter Regular 400 (latin)
     // Load Noto Sans SC (Simplified Chinese characters)
     await chromium.font('https://fonts.gstatic.com/s/notosanssc/v30/k3kXo84MPvpLmixcA63oeALZKLdUwfRrm8_v.woff2'); // Noto Sans SC Regular
 
@@ -78,7 +78,6 @@ export async function POST(req: NextRequest) {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             html, body { width: 100%; height: 100%; font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: black; overflow: hidden; }
