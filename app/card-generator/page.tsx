@@ -23,6 +23,7 @@ import JSZip from "jszip"
 // import html2canvas from "html2canvas"; // Reverting to dom-to-image-more
 // import domtoimage from 'dom-to-image-more'; // Commenting out dom-to-image-more
 import * as htmlToImage from 'html-to-image'; // Added html-to-image import
+import { setTimeout } from "timers"
 
 // Theme options for the card
 const themes = [
@@ -110,6 +111,10 @@ export default function CardGenerator() {
   const [copied, setCopied] = useState(false)
   const [aspectRatio, setAspectRatio] = useState("3:4")
   const [exporting, setExporting] = useState(false)
+
+  // New states for robust export handling
+  const [isAttemptingExport, setIsAttemptingExport] = useState(false);
+  const [exportFunctionToCall, setExportFunctionToCall] = useState<(() => Promise<void>) | null>(null);
 
   const aspectRatios = [
     { value: "1:1", label: "1:1 (Square)" },
@@ -289,84 +294,112 @@ export default function CardGenerator() {
     p: ({ node, ...props }: any) => <p className="mb-2" {...props} />,
   }
 
-  // Export single card as image
-  const exportSingleCard = async () => {
-    const originalTab = activeTab;
+  // Actual export logic, assuming cardRef.current is valid
+  const doActualSingleExport = async () => {
+    if (!cardRef.current) { 
+      console.error("doActualSingleExport: cardRef.current is unexpectedly null.");
+      alert("Export failed: Card element reference missing.");
+      setExporting(false); 
+      return;
+    }
     try {
-      setExporting(true);
-      // setActiveTab("preview"); // Removed: Keep current tab active, cardRef is on Edit tab's card
+      // Log dimensions for debugging
+      console.log("CardRef Dimensions before single export:");
+      console.log("  CSS style.width:", cardRef.current.style.width);
+      console.log("  CSS style.height:", cardRef.current.style.height);
+      console.log("  clientWidth:", cardRef.current.clientWidth);
+      console.log("  clientHeight:", cardRef.current.clientHeight);
+      console.log("  scrollWidth:", cardRef.current.scrollWidth);
+      console.log("  scrollHeight:", cardRef.current.scrollHeight);
+      console.log("  Computed padding:", window.getComputedStyle(cardRef.current).padding);
+      console.log("  Computed boxSizing:", window.getComputedStyle(cardRef.current).boxSizing);
 
-      // await new Promise((resolve) => setTimeout(resolve, 300)); // May not be needed if not switching tabs
-
-      if (!cardRef.current) {
-        console.error("Card element (cardRef.current) not found for export.");
-        throw new Error("Card element not found for export.");
+      const contentArea = contentAreaRef.current;
+      if (contentArea) {
+        console.log("ContentAreaRef Dimensions:");
+        console.log("  clientWidth:", contentArea.clientWidth);
+        console.log("  clientHeight:", contentArea.clientHeight);
+        console.log("  scrollWidth:", contentArea.scrollWidth);
+        console.log("  scrollHeight:", contentArea.scrollHeight);
+        const proseElement = contentArea.querySelector('.prose');
+        if (proseElement) {
+            console.log("Prose Element Dimensions (inside ContentAreaRef):");
+            console.log("  clientWidth:", proseElement.clientWidth);
+            console.log("  clientHeight:", proseElement.clientHeight);
+            console.log("  scrollWidth:", proseElement.scrollWidth);
+            console.log("  scrollHeight:", proseElement.scrollHeight);
+        }
       }
 
+      const cardElementStyle = getAspectRatioStyle(aspectRatio);
+      const exportWidth = parseInt(cardElementStyle.width, 10);
+      const exportHeight = parseInt(cardElementStyle.height, 10);
+
       const options = {
-        quality: 0.98, // For html-to-image, this is mainly for toJpeg/toWebp
+        quality: 0.98,
         cacheBust: true,
-        // backgroundColor: '#000000', // Can be used if a specific background is needed for PNG
-        pixelRatio: 2, // Added to increase image clarity
+        pixelRatio: 2,
+        width: exportWidth,
+        height: exportHeight,
       };
-      
-      const dataUrl = await htmlToImage.toPng(cardRef.current, options); // Using htmlToImage.toPng
-      
+      const dataUrl = await htmlToImage.toPng(cardRef.current, options);
       const link = document.createElement('a');
       link.download = `social-card-${format(date, 'yyyy-MM-dd')}.png`;
       link.href = dataUrl;
       link.click();
-
     } catch (error) {
-      console.error("Error exporting card:", error);
+      console.error("Error during actual single card export:", error);
       alert("Failed to export card. Please try again.");
     } finally {
-      setActiveTab(originalTab);
-      setExporting(false);
+      // setExporting(false); // Reset by the new useEffect completion logic
     }
   };
 
-  // Export all cards as a zip file
-  const exportAllCards = async () => {
-    if (!cardRef.current || pages.length <= 1) {
-      if (pages.length === 1) { // If only one page, call single export
-        await exportSingleCard();
-      }
+  const doActualAllCardsExport = async () => {
+    if (!cardRef.current) { 
+      console.error("doActualAllCardsExport: cardRef.current is unexpectedly null.");
+      alert("Failed to export all cards: Card element reference missing.");
+      setExporting(false);
       return;
     }
-
-    const originalTab = activeTab;
     const currentPageBackup = currentPage;
-
     try {
-      setExporting(true);
-      // setActiveTab("preview"); // Removed: Keep current tab active, cardRef is on Edit tab's card
+      // Log dimensions for debugging (for the first card in multi-export)
+      console.log("CardRef Dimensions before multi-export (first card):");
+      console.log("  CSS style.width:", cardRef.current.style.width);
+      console.log("  CSS style.height:", cardRef.current.style.height);
+      console.log("  clientWidth:", cardRef.current.clientWidth);
+      console.log("  clientHeight:", cardRef.current.clientHeight);
+      console.log("  scrollWidth:", cardRef.current.scrollWidth);
+      console.log("  scrollHeight:", cardRef.current.scrollHeight);
 
+      const cardElementStyle = getAspectRatioStyle(aspectRatio);
+      const exportWidth = parseInt(cardElementStyle.width, 10);
+      const exportHeight = parseInt(cardElementStyle.height, 10);
+      
       const zip = new JSZip();
       const imgFolder = zip.folder("social-cards");
-
       const options = {
-        quality: 0.98, // For html-to-image, this is mainly for toJpeg/toWebp
+        quality: 0.98,
         cacheBust: true,
-        // backgroundColor: '#000000',
-        pixelRatio: 2, // Added to increase image clarity
+        pixelRatio: 2,
+        width: exportWidth,
+        height: exportHeight,
       };
 
       for (let i = 0; i < pages.length; i++) {
         setCurrentPage(i);
-        await new Promise((resolve) => setTimeout(resolve, 400));
+        await new Promise((resolve) => setTimeout(resolve, 200)); // Wait for page content to update
 
-        if (!cardRef.current) {
-          console.error(`Card element not found for page ${i + 1}`);
-          continue; 
+        if (!cardRef.current) { // Re-check cardRef inside loop as DOM might change
+          console.error(`Card element not found for page ${i + 1} during multi-export.`);
+          throw new Error(`Card element not found for page ${i + 1}`);
         }
-        
-        const blob = await htmlToImage.toBlob(cardRef.current, options); // Using htmlToImage.toBlob
-        
+        const blob = await htmlToImage.toBlob(cardRef.current, options);
         if (blob instanceof Blob) {
           imgFolder?.file(`social-card-${format(date, "yyyy-MM-dd")}-${i + 1}.png`, blob);
         } else {
-          console.error(`Failed to generate valid blob for page ${i + 1}. Blob result:`, blob);
+          console.error(`Failed to generate valid blob for page ${i + 1}.`);
         }
       }
 
@@ -375,15 +408,83 @@ export default function CardGenerator() {
       link.href = URL.createObjectURL(zipContent);
       link.download = `social-cards-${format(date, "yyyy-MM-dd")}.zip`;
       link.click();
-      URL.revokeObjectURL(link.href); // Clean up blob URL
-
+      URL.revokeObjectURL(link.href);
     } catch (error) {
-      console.error("Error exporting cards:", error);
+      console.error("Error during actual multi-card export:", error);
       alert("Failed to export cards. Please try again.");
     } finally {
       setCurrentPage(currentPageBackup);
-      setActiveTab(originalTab);
-      setExporting(false);
+      // setExporting(false); // Reset by new useEffect completion logic
+    }
+  };
+
+  // useEffect to handle the actual export when conditions are met
+  useEffect(() => {
+    if (isAttemptingExport && activeTab === 'edit' && exportFunctionToCall) {
+      if (cardRef.current) {
+        // console.log("useEffect: Conditions met, cardRef valid, calling export function.");
+        exportFunctionToCall()
+          .catch(err => {
+            console.error("Export function call failed:", err);
+            // alert already handled in doActual... functions
+          })
+          .finally(() => {
+            setIsAttemptingExport(false);
+            setExportFunctionToCall(null);
+            setExporting(false); // Reset global exporting state here after function completes
+          });
+      } else {
+        // cardRef.current is not yet available. 
+        // The setActiveTab('edit') should trigger a re-render that populates cardRef.
+        // This timeout is a fallback.
+        // console.warn("useEffect: On Edit tab, attempting export, but cardRef is still null. Setting timeout.");
+        const timeoutId = setTimeout(() => {
+          // Re-check if the export is still pending and the function is still assigned
+          if (isAttemptingExport && exportFunctionToCall) { 
+            if (cardRef.current) {
+              // console.log("useEffect timeout: cardRef now valid, calling export function.");
+              exportFunctionToCall()
+                .catch(err => console.error("Export function call from timeout failed:", err))
+                .finally(() => {
+                  setIsAttemptingExport(false);
+                  setExportFunctionToCall(null);
+                  setExporting(false);
+                });
+            } else { // cardRef still null after timeout
+              console.error("useEffect timeout: cardRef STILL null. Aborting export.");
+              alert("Export failed: Card element was not ready in time. Please try again.");
+              setIsAttemptingExport(false);
+              setExportFunctionToCall(null);
+              setExporting(false);
+            }
+          }
+        }, 300); // 300ms delay as a fallback for cardRef to populate
+        return () => clearTimeout(timeoutId); // Cleanup timeout if component unmounts or deps change
+      }
+    }
+  }, [isAttemptingExport, activeTab, exportFunctionToCall]);
+
+  // Export single card as image - Now sets up the export state
+  const exportSingleCard = async () => {
+    if (exporting) return; // Prevent multiple clicks if already exporting
+    setExporting(true); // Set global exporting state for UI feedback
+    setExportFunctionToCall(() => doActualSingleExport); // Pass the function reference
+    setIsAttemptingExport(true);
+    if (activeTab !== "edit") {
+      setActiveTab("edit");
+      // The useEffect will handle it from here after tab switch
+    }
+  };
+
+  // Export all cards as a zip file - Now sets up the export state
+  const exportAllCards = async () => {
+    if (exporting) return;
+    setExporting(true);
+    setExportFunctionToCall(() => doActualAllCardsExport);
+    setIsAttemptingExport(true);
+    if (activeTab !== "edit") {
+      setActiveTab("edit");
+      // The useEffect will handle it
     }
   };
 
@@ -740,7 +841,7 @@ export default function CardGenerator() {
                           getCardShadow(selectedTheme.id),
                           getCardPadding(aspectRatio),
                           selectedTheme.bgColor,
-                          "flex flex-col overflow-hidden",
+                          "flex flex-col overflow-hidden"
                         )}
                       >
                         <div ref={headerRef} className={cn("flex justify-between items-center", getHeaderSize(aspectRatio))}>
@@ -767,8 +868,7 @@ export default function CardGenerator() {
                           ref={contentAreaRef}
                           className={cn(
                             "flex-grow flex items-center justify-center min-h-0",
-                            selectedTheme.extraClasses || "",
-                            "overflow-hidden"
+                            selectedTheme.extraClasses || ""
                           )}
                         >
                           <div
@@ -864,7 +964,7 @@ export default function CardGenerator() {
                   getCardShadow(selectedTheme.id),
                   getCardPadding(aspectRatio),
                   selectedTheme.bgColor,
-                  "flex flex-col overflow-hidden",
+                  "flex flex-col overflow-hidden"
                 )}
               >
                 <div className={cn("flex justify-between items-center", getHeaderSize(aspectRatio))}>
@@ -889,9 +989,8 @@ export default function CardGenerator() {
 
                 <div className={cn(
                   "flex-grow flex items-center justify-center min-h-0", 
-                  selectedTheme.extraClasses || "",
-                  "overflow-hidden"
-                  )}>
+                  selectedTheme.extraClasses || ""
+                )}>
                   <div
                     className={cn(
                       "w-full",
