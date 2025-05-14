@@ -85,7 +85,8 @@ export async function POST(req: NextRequest) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            html, body { width: 100%; height: 100%; font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: black; overflow: hidden; }
+            /* Simplified font stack for debugging */
+            html, body { width: 100%; height: 100%; font-family: 'Noto Sans SC', sans-serif; background-color: black; overflow: hidden; }
             .card {
               width: 100%; height: 100%; display: flex; flex-direction: column;
               padding: ${cardPadding};
@@ -200,7 +201,12 @@ export async function POST(req: NextRequest) {
     // Get details of the rendered markdown content for debugging
     const debugInfo = await page.evaluate(() => {
       const markdownContentEl = document.querySelector('.markdown-content');
+      const cardContentEl = document.querySelector('.card-content');
+      const markdownWrapperEl = document.querySelector('.markdown-wrapper');
+
       if (!markdownContentEl) return { error: '.markdown-content not found' };
+      if (!cardContentEl) return { error: '.card-content not found' };
+      if (!markdownWrapperEl) return { error: '.markdown-wrapper not found' };
 
       const firstP = markdownContentEl.querySelector('p');
       const firstLi = markdownContentEl.querySelector('li');
@@ -213,6 +219,10 @@ export async function POST(req: NextRequest) {
         firstLiText: firstLi ? firstLi.innerText : null,
         firstLiColor: firstLi ? window.getComputedStyle(firstLi).color : null,
         firstLiDisplay: firstLi ? window.getComputedStyle(firstLi).display : null,
+        cardContentOverflowY: window.getComputedStyle(cardContentEl).overflowY,
+        cardContentOpacity: window.getComputedStyle(cardContentEl).opacity,
+        markdownWrapperOverflowY: window.getComputedStyle(markdownWrapperEl).overflowY,
+        markdownWrapperOpacity: window.getComputedStyle(markdownWrapperEl).opacity,
       };
     });
     console.log('Debug info from Puppeteer page:', debugInfo);
