@@ -22,11 +22,11 @@ export async function POST(req: NextRequest) {
     console.log('Received content from client:', content); // Log received content
 
     // Construct absolute file paths for fonts in the public directory
-    const interFontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.woff2');
-    const notoFontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSansCJKsc-VF.otf');
+    // const interFontPath = path.join(process.cwd(), 'public', 'fonts', 'Inter-Regular.woff2');
+    // const notoFontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSansCJKsc-VF.otf');
 
-    await chromium.font(interFontPath);
-    await chromium.font(notoFontPath);
+    // await chromium.font(interFontPath); // Temporarily disabled
+    // await chromium.font(notoFontPath); // Temporarily disabled
 
     const executablePath = await chromium.executablePath();
 
@@ -89,8 +89,14 @@ export async function POST(req: NextRequest) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            /* Simplified font stack for debugging */
-            html, body { width: 100%; height: 100%; font-family: 'Noto Sans SC', sans-serif; background-color: black; overflow: hidden; }
+            /* Relying on system fonts and a broad font stack */
+            html, body { 
+              width: 100%; 
+              height: 100%; 
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif; 
+              background-color: black; 
+              overflow: hidden; 
+            }
             .card {
               width: 100%; height: 100%; display: flex; flex-direction: column;
               padding: ${cardPadding};
