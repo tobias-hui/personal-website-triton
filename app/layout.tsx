@@ -19,8 +19,7 @@ export const metadata: Metadata = {
     icon: "/favicon.png",
     shortcut: "/favicon.png",
     apple: "/favicon.png",
-  },
-    generator: 'v0.dev'
+  }
 }
 
 export default function RootLayout({

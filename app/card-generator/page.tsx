@@ -389,12 +389,37 @@ export default function CardGenerator() {
 
       for (let i = 0; i < pages.length; i++) {
         setCurrentPage(i);
-        await new Promise((resolve) => setTimeout(resolve, 200)); // Wait for page content to update
+        await new Promise((resolve) => setTimeout(resolve, 250)); // Increased delay slightly for content update
 
-        if (!cardRef.current) { // Re-check cardRef inside loop as DOM might change
-          console.error(`Card element not found for page ${i + 1} during multi-export.`);
+        if (!cardRef.current) { 
+          console.error(`Card element (cardRef.current) not found for page ${i + 1} during multi-export.`);
           throw new Error(`Card element not found for page ${i + 1}`);
         }
+
+        // Log dimensions for the CURRENT page (i)
+        console.log(`--- Dimensions for Page ${i + 1} ---`);
+        console.log("  CardRef CSS style.width:", cardRef.current.style.width);
+        console.log("  CardRef CSS style.height:", cardRef.current.style.height);
+        console.log("  CardRef clientWidth:", cardRef.current.clientWidth);
+        console.log("  CardRef clientHeight:", cardRef.current.clientHeight);
+        console.log("  CardRef scrollWidth:", cardRef.current.scrollWidth);
+        console.log("  CardRef scrollHeight:", cardRef.current.scrollHeight);
+        console.log("  CardRef Computed padding:", window.getComputedStyle(cardRef.current).padding);
+
+        const contentArea = contentAreaRef.current;
+        if (contentArea) {
+          console.log("  ContentAreaRef clientWidth:", contentArea.clientWidth);
+          console.log("  ContentAreaRef scrollWidth:", contentArea.scrollWidth);
+          const proseElement = contentArea.querySelector('.prose');
+          if (proseElement) {
+              console.log("  Prose Element clientWidth:", proseElement.clientWidth);
+              console.log("  Prose Element scrollWidth:", proseElement.scrollWidth);
+          }
+        } else {
+          console.log("  ContentAreaRef not found for page", i + 1);
+        }
+        console.log(`--- End Dimensions for Page ${i + 1} ---`);
+        
         const blob = await htmlToImage.toBlob(cardRef.current, options);
         if (blob instanceof Blob) {
           imgFolder?.file(`social-card-${format(date, "yyyy-MM-dd")}-${i + 1}.png`, blob);
